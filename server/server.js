@@ -25,24 +25,24 @@ io.on("connection", (socket) => {
     console.log("User was disconnected");
   });
 
-  socket.on("createMessage", (newMessage) => {
-    console.log("createMessage", JSON.stringify(newMessage, undefined, 2));
+  socket.on("createMessage", (message) => {
+    console.log("createMessage", JSON.stringify(message, undefined, 2));
+
+    io.emit("newMessage", {
+      from: message.from,
+      text: message.text,
+      createdAt: new Date().getTime()
+    });
   });
 
   // ===================
   // === socket.emit ===
   // ===================
 
-  socket.emit("newMessage", {
-    from: "John",
-    text: "This is a new message",
-    createdAt: new Date()
-  });
-
 });
 
 server.listen(PORT, () => {
-  console.log(`\nListening on port ${PORT}`);
+  console.log(`\nListening on port ${PORT}\n`);
 });
 
 

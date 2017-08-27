@@ -7,10 +7,7 @@ socket.on("connect", function() {
 
   // emmit stuff after connected
 
-  socket.emit("createMessage", {
-    from: "person",
-    text: "blargh"
-  });
+
 });
 
 socket.on("disconnect", function() {
