@@ -17,6 +17,19 @@ app.use(express.static(publicPath));
 io.on('connection', (socket) => {
   console.log('\nNew user connected');
 
+  socket.emit('newConnection', {
+    'from': 'Admin',
+    'text': 'Welcome to the chat app',
+    'createdAt': Date.now()
+  });
+
+  // socket.braodcast.emit // from admin // text new user joined
+  socket.broadcast.emit('newUserJoined', {
+    'from': 'Admin',
+    'text': 'New user joined',
+    'createdAt': Date.now()
+  });
+
   socket.on('createMessage', (data) => {
     console.log('createMessage');
     console.log(JSON.stringify(data, undefined, 2));
