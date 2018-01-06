@@ -15,10 +15,6 @@ socket.on('connect', () => {
     printEventData('newMessage', data);
   });
 
-  socket.on('newConnection', (data) => {
-    printEventData('newConnection', data);
-  });
-
   socket.on('newUserJoined', (data) => {
     printEventData('newUserJoined', data);
   });
