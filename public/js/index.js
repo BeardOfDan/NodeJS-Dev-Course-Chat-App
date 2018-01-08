@@ -7,8 +7,20 @@ socket.on('connect', () => {
 
   socket.on('newMessage', (message) => {
     // create a new List Item to display the new message
-    let li = jQuery("<li></li>");
+    let li = jQuery('<li></li>');
     li.text(`${message.from}: ${message.text}`);
+
+    jQuery('#messages').append(li);
+  });
+
+  socket.on('newLocationMessage', (message) => {
+    let li = jQuery('<li></li');
+    let anchor = jQuery('<a target="_blank">My current location</a>');
+
+    li.text(`${message.from}: `);
+    anchor.attr('href', message.url);
+
+    li.append(anchor);
 
     jQuery('#messages').append(li);
   });
