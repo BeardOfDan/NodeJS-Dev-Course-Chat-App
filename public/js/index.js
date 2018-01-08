@@ -11,8 +11,14 @@ const socket = io();
 socket.on('connect', () => {
   console.log('Connected to the server');
 
-  socket.on('newMessage', (data) => {
-    printEventData('newMessage', data);
+  socket.on('newMessage', (message) => {
+    printEventData('newMessage', message);
+
+    // create a new List Item to display the new message
+    let li = jQuery("<li></li>");
+    li.text(`${message.from}: ${message.text}`);
+
+    jQuery('#messages').append(li);
   });
 
   socket.on('newUserJoined', (data) => {
@@ -22,13 +28,6 @@ socket.on('connect', () => {
   socket.on('disconnect', () => {
     console.log('Disconnected from the server');
   });
-});
-
-socket.emit('createMessage', {
-  'from': 'Frank',
-  'text': 'Hi'
-}, (data) => {
-  console.log('Got it', data);
 });
 
 jQuery('#messageForm').on('submit', (e) => {
