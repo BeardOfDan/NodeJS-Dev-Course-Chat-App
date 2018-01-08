@@ -2,7 +2,7 @@
 
 // helper function
 const printEventData = (eventName, eventData) => {
-  console.log(eventName);
+  console.log('\n' + eventName);
   console.log(JSON.stringify(eventData, undefined, 2));
 };
 
@@ -29,4 +29,13 @@ socket.emit('createMessage', {
   'text': 'Hi'
 }, (data) => {
   console.log('Got it', data);
+});
+
+jQuery('#messageForm').on('submit', (e) => {
+  e.preventDefault();
+
+  socket.emit('createMessage', {
+    'from': 'User',
+    'text': jQuery('[name=message]').val()
+  }, () => { 'Obligatory acknowledgment callback function'; });
 });
