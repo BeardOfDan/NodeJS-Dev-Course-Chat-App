@@ -33,10 +33,14 @@ socket.on('connect', () => {
 jQuery('#messageForm').on('submit', (e) => {
   e.preventDefault();
 
+  const messageTextBox = jQuery('[name=message]');
+
   socket.emit('createMessage', {
     'from': 'User',
-    'text': jQuery('[name=message]').val()
-  }, () => { 'Obligatory acknowledgment callback function'; });
+    'text': messageTextBox.val()
+  }, () => {
+    messageTextBox.val('');
+  });
 });
 
 const locationButton = jQuery('#send-location');
