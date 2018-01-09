@@ -6,23 +6,27 @@ socket.on('connect', () => {
   console.log('Connected to the server');
 
   socket.on('newMessage', (message) => {
-    // create a new List Item to display the new message
-    let li = jQuery('<li></li>');
-    li.text(`${message.from}: ${message.text}`);
+    const formattedTime = moment(message.createdAt).format('h:mm a');
+    const template = jQuery('#message-template').html();
+    const html = Mustache.render(template, {
+      'text': message.text,
+      'from': message.from,
+      'createdAt': formattedTime
+    });
 
-    jQuery('#messages').append(li);
+    jQuery('#messages').append(html);
   });
 
   socket.on('newLocationMessage', (message) => {
-    let li = jQuery('<li></li');
-    let anchor = jQuery('<a target="_blank">My current location</a>');
+    const formattedTime = moment(message.createdAt).format('h:mm a');
+    const template = jQuery('#location-message-template').html();
+    const html = Mustache.render(template, {
+      'url': message.url,
+      'from': message.from,
+      'createdAt': formattedTime
+    });
 
-    li.text(`${message.from}: `);
-    anchor.attr('href', message.url);
-
-    li.append(anchor);
-
-    jQuery('#messages').append(li);
+    jQuery('#messages').append(html);
   });
 
   socket.on('disconnect', () => {
