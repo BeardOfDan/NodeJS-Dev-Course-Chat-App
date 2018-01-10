@@ -60,6 +60,10 @@ socket.on('connect', () => {
     scrollToBottom();
   });
 
+  socket.on('updateUserList', (users) => {
+    console.log(users);
+  });
+
   socket.on('disconnect', () => {
     console.log('Disconnected from the server');
   });
