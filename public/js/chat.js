@@ -61,7 +61,13 @@ socket.on('connect', () => {
   });
 
   socket.on('updateUserList', (users) => {
-    console.log(users);
+    const ol = jQuery('<ol></ol');
+
+    for (let i = 0; i < users.length; i++) {
+      ol.append(jQuery('<li></li>').text(users[i]));
+    }
+
+    jQuery('#users').html(ol);
   });
 
   socket.on('disconnect', () => {
